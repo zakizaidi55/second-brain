@@ -1,10 +1,11 @@
 import express from "express";
 import mongoose from "mongoose";
 import jwt from "jsonwebtoken";
-import { ContentModel, UserModel } from "./db";
+import { ContentModel, LinkModel, UserModel } from "./db";
 import bcrypt from "bcrypt";
 import * as dotenv from 'dotenv';
 import { userMiddleware } from "./middleware";
+import { random } from "./utils";
 dotenv.config(); 
 
 const jwt_secret = process.env.JWT_SECRET; 
@@ -140,12 +141,97 @@ app.get("/api/v1/content", userMiddleware, async (req, res) => {
     
 })
 
-app.delete("/api/vi/content/:id", async(req, res)=> {
-    
+// @ts-ignore
+app.delete("/api/vi/content", userMiddleware, async(req, res)=> {
+    const contentId = req.body.contentId;
+
+    try {
+        await ContentModel.deleteMany({
+            contentId,
+            userId:(req as any).userId,
+        })
+
+        return res.status(200).json({
+            message:"Deleted successfully",
+        })
+    } catch(error) {
+        console.log("Error while deleting content");
+        res.status(500).json({
+            message:"Server crashed"
+        })
+    }
 })
 
-app.post("/api/v1/brain/share", (req, res)=> {
+// @ts-ignore
+app.post("/api/v1/brain/share",userMiddleware, async(req, res)=> {
+    const {share} = req.body;
 
+    try {
+        const hash = random(10);
+        if(share == "true") {
+            const existingLink = await LinkModel.findOne({
+                userId:(req as any).userId
+            })
+
+            if(existingLink) {
+                return res.json({
+                    hash:existingLink.hash
+                })
+            }
+            await LinkModel.create({
+                userId: (req as any).userId,
+                hash:hash
+            })
+        }
+    
+        else {
+            await LinkModel.deleteOne({
+                userId:(req as any).userId,
+            });
+        }
+
+        res.status(200).json({
+            message:"/share/" + hash,
+
+        })
+    } catch(error) {
+        return res.status(500).json({
+            message:"Error while updating sharable link",
+        })
+    }
+})
+
+// @ts-ignore
+app.get("/api/v1/brain/:sharelink", async(req, res)=> {
+    const hash = req.params.sharelink;
+
+    try {
+        const link = await LinkModel.findOne({
+            hash
+        });
+    
+        if(!link) {
+            return res.status(411).json({
+                message:"incorrect input"
+            })
+        }
+
+        const content = await ContentModel.find({
+            userId: link.userId
+        })
+
+        const user = await UserModel.findOne({
+            _id:link.userId
+        })
+
+
+        res.status(200).json({
+            username:user?.username,
+            content:content
+        })
+    } catch(error) {
+
+    }
 })
 
 app.listen(3000);
