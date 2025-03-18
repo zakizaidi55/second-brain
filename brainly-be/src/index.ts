@@ -6,6 +6,7 @@ import bcrypt from "bcrypt";
 import * as dotenv from 'dotenv';
 import { userMiddleware } from "./middleware";
 import { random } from "./utils";
+import cors  from "cors";
 dotenv.config(); 
 
 const jwt_secret = process.env.JWT_SECRET; 
@@ -13,6 +14,7 @@ const jwt_secret = process.env.JWT_SECRET;
 const app = express();
 
 app.use(express.json());
+app.use(cors());
 
 app.post("/api/v1/signup", async (req:any, res:any) => {
     const userName = req.body.userName;
@@ -99,13 +101,14 @@ app.post("/api/v1/signin", async(req:any, res:any) => {
 app.post("/api/v1/content", userMiddleware, async(req, res) => {
     const link = req.body.link;
     const title = req.body.title;
-
+    const type = req.body.type;
     try {
         await ContentModel.create({
             link,
             title,
             userId:(req as any).userId,
-            tags:[]
+            tags:[],
+            type
         })
 
         return res.status(200).json({

@@ -29,7 +29,7 @@ export const UserModel = model("User", UserSchema);
 
 const ContentSchema = new Schema({
     title:{
-        type:String,
+        type:String, 
     },
 
     link : {
@@ -40,6 +40,8 @@ const ContentSchema = new Schema({
         type:mongoose.Types.ObjectId,
         ref:"Tag"
     }],
+
+    type : String,
 
     userId : {
         type:mongoose.Types.ObjectId,
