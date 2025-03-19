@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Button } from '../components/Button'
 import { CreateContentModal } from '../components/CreateContentModal'
 import { PlusIcon } from '../Icons/PlusIcon'
@@ -9,6 +9,7 @@ import { Card } from '../components/Card'
 export function Dashboard() {
   const [modalOpen, setModalOpen] = useState(false);
   const contents = useContent();
+  
   return (
     <div>
     <Sidebar />
@@ -23,7 +24,7 @@ export function Dashboard() {
       </div>
 
       <div className="flex gap-4 flex-wrap">
-        {contents.map(({type, link, title}) => <Card 
+        {contents?.map(({type, link, title}) => <Card 
             type={type}
             link={link}
             title={title}

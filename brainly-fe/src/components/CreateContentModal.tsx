@@ -1,5 +1,5 @@
 
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { CrossIcon } from "../Icons/CrossIcon";
 import { Button } from "./Button";
 import { Input } from "./Input";
