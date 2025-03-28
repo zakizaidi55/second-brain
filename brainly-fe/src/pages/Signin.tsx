@@ -12,18 +12,47 @@ export function Signin() {
     const navigate = useNavigate();
 
     async function signin() {
-        console.log("button clicked")
+        console.log("button Clicked");
         const userName = userNameRef?.current?.value;
         const password = passwordRef?.current?.value;
+    
+        if (!userName || !password) {
+            return;
+        }
+    
+        try {
+            const res = await axios.post(`${BACKEND_URL}/api/v1/signin`, {
+                userName,
+                password,
+            });
+    
+            console.log("API Response:", res);
+            
+            // @ts-ignore
+            const token = res?.data?.token;
+            if (!token) {
+                return;
+            }
+    
+            localStorage.setItem("token", token);
+            navigate("/dashboard");
+    
+        } catch (error:any) {
+            console.error("Axios Error:", error);
+    
+            // Axios stores response errors in `error.response`
+            if (error.response) {
+                console.log("Error Response Data:", error.response.data);
+                
+            } else if (error.request) {
+                console.log("No response received:", error.request);
 
-        const response = await axios.post(`${BACKEND_URL}/api/v1/signin`, {
-            userName,
-            password
-        })
-        //@ts-ignore
-        const jwt = response?.data?.token;
-        localStorage.setItem("token", jwt);
-        navigate("/dashboard")
+            } else {
+                console.log("Unexpected Error:", error.message);
+                
+            }
+        }
+    
     }
 
     
