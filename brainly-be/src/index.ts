@@ -65,7 +65,7 @@ app.post("/api/v1/signin", async(req:any, res:any) => {
        console.log("existing user ", existingUser);
 
        if(!existingUser) {
-        return res.status(404).json({
+        return res.status(500).json({
             message:"You need to create an user"
         })
        }
