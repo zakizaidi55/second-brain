@@ -5,10 +5,17 @@ import { PlusIcon } from '../Icons/PlusIcon'
 import { Sidebar } from '../components/Sidebar'
 import { useContent } from '../hooks/useContent'
 import { Card } from '../components/Card'
+import { useNavigate } from 'react-router-dom'
 
 export function Dashboard() {
   const [modalOpen, setModalOpen] = useState(false);
   const contents = useContent();
+  const navigate = useNavigate();
+
+  function logout() {
+    localStorage.removeItem("token");
+    navigate("/");
+  }
   
   return (
     <div>
@@ -17,10 +24,18 @@ export function Dashboard() {
       <CreateContentModal open={modalOpen} onClose={() => {
         setModalOpen(false);
       }} />
-      <div className="flex justify-end gap-4">
-        <Button onClick={() => {
-          setModalOpen(true)
-        }} variant="primary" text="Add content" startIcon={<PlusIcon />}></Button>
+      <div className='flex gap-3 justify-end'>
+        <div className="flex justify-end gap-4">
+          <Button onClick={() => {
+            setModalOpen(true)
+          }} variant="primary" text="Add content" startIcon={<PlusIcon />}></Button>
+        </div>
+
+        <div className="flex justify-end gap-4">
+          <Button onClick={() => {
+            logout()
+          }} variant="secondary" text="Logout"></Button>
+        </div>
       </div>
 
       <div className="flex gap-4 flex-wrap">

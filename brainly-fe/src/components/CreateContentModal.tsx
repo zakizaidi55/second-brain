@@ -21,6 +21,11 @@ export function CreateContentModal({open, onClose}:any) {
         const title = titleRef?.current?.value;
         const link = linkRef?.current?.value
 
+        if(!title || !link) {
+            alert("Please add content");
+            return;
+        }
+
         await axios.post(`${BACKEND_URL}/api/v1/content` ,{
             title,
             link,

@@ -17,6 +17,7 @@ export function Signin() {
         const password = passwordRef?.current?.value;
     
         if (!userName || !password) {
+            alert("Please enter values")
             return;
         }
     
@@ -57,12 +58,16 @@ export function Signin() {
 
     
     return <div className="h-screen w-screen bg-gray-200 flex justify-center items-center">
-        <div className="bg-white rounded-xl border min-w-48 p-8">
-            <Input reference={userNameRef} placeholder="Username"/>
-            <Input reference={passwordRef} placeholder="Password" />
+        <div className="bg-white rounded-xl border p-12 max-w-[430px]">
+            <Input reference={userNameRef} placeholder="Username" textType={"text"}/>
+            <Input reference={passwordRef} placeholder="Password" textType={"password"} />
             <div className="flex justify-center items-center rounded pt-4"> 
                 {/* <Button onClick={signin} loading={false} variant="primary" text="signup" fullWidth={true}/> */}
-                <button onClick={signin}>Sign in</button>
+                <div className="flex gap-2">
+                    <button className="rounded-md border p-4 max-w-36" onClick={signin}>Sign in</button>
+                    <button className="rounded-md border p-4 max-w-36" onClick={()=> navigate("/signup")}>Dont have an account</button>
+                </div>
+                
             </div>
         </div>
     </div>

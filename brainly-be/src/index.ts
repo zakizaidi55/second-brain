@@ -57,12 +57,12 @@ app.post("/api/v1/signin", async(req:any, res:any) => {
     const userName = req.body.userName;
     const password = req.body.password;
     try {
-        console.log("inside try ");
+
        const existingUser = await UserModel.findOne({
         username:userName,
        })
 
-       console.log("existing user ", existingUser);
+       //console.log("existing user ", existingUser);
 
        if(!existingUser) {
         return res.status(500).json({
@@ -236,5 +236,6 @@ app.get("/api/v1/brain/:sharelink", async(req, res)=> {
 
     }
 })
+
 
 app.listen(3000);
