@@ -1,16 +1,18 @@
-import { useEffect, useState } from 'react'
+import {  useState } from 'react'
 import { Button } from '../components/Button'
 import { CreateContentModal } from '../components/CreateContentModal'
 import { PlusIcon } from '../Icons/PlusIcon'
-import { Sidebar } from '../components/Sidebar'
 import { useContent } from '../hooks/useContent'
 import { Card } from '../components/Card'
 import { useNavigate } from 'react-router-dom'
+import { Navbar } from '../components/Navbar'
+
 
 export function Dashboard() {
   const [modalOpen, setModalOpen] = useState(false);
   const contents = useContent();
   const navigate = useNavigate();
+
 
   function logout() {
     localStorage.removeItem("token");
@@ -45,6 +47,8 @@ export function Dashboard() {
         />)}
       </div>
     </div>
+
+    
   </div>
   )
 }

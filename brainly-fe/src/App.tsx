@@ -1,15 +1,31 @@
+import { useState } from "react"
 import { OpenRoute } from "./components/Auth/OpenRoute"
 import { PrivateRoute } from "./components/Auth/PrivateRoute"
+import { Navbar } from "./components/Navbar"
 import { Dashboard } from "./pages/dashboard"
 import { ErrorPage } from "./pages/ErrorPage"
 import  LandingPage  from "./pages/LandingPage"
 import { Signin } from "./pages/Signin"
 import { Signup } from "./pages/Singup"
 import { BrowserRouter, Routes, Route } from "react-router-dom"
+import { Sidebar } from "./components/Sidebar"
 
 
 function App() {
-  return  <BrowserRouter>
+    const [sidebarOpen, setSidebarOpen] = useState(false);
+    const toggleSidebar = () => setSidebarOpen(prev => !prev);
+
+
+    {sidebarOpen && (
+      <div
+        onClick={toggleSidebar}
+        className="fixed inset-0 bg-black bg-opacity-50 z-30"
+      />
+    )}
+  return (  <div>
+  <Navbar toggleSidebar={toggleSidebar} />
+  <Sidebar isOpen={sidebarOpen} toggle={toggleSidebar} />
+  <BrowserRouter>
     <Routes>
       <Route path="/signup" element={
         <OpenRoute>
@@ -39,6 +55,7 @@ function App() {
       />
     </Routes>
   </BrowserRouter>
+  </div>)
 }
 
 export default App
