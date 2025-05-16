@@ -15,11 +15,24 @@ mongoose.connect(mongoURI)
     .catch(err => console.error("MongoDB Connection Error:", err));
 
 const UserSchema = new Schema({
-    username:{
+    firstName:{
         type:String,
         unique:true,
     },
 
+    lastName:{
+        type:String,
+        unique:true,
+    },
+
+    email:{
+        type:String,
+        unique:true,
+    },
+    phoneNumber:{
+        type:String,
+        unique:true,
+    },
     password: {
         type:String
     }

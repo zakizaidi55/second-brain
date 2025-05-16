@@ -17,13 +17,19 @@ app.use(express.json());
 app.use(cors());
 
 app.post("/api/v1/signup", async (req:any, res:any) => {
-    const userName = req.body.userName;
+    const firstName = req.body.firstName;
+    const lastName = req.body.lastName;
+    const email = req.body.email;
+    const phoneNumber = req.body.phoneNumber
     const password = req.body.password;
     try {        
-        console.log("username", userName);
+        console.log("firsrName", firstName);
+        console.log("lastName", password);
+        console.log("email", email);
+        console.log("phoneNumber", phoneNumber);
         console.log("password", password);
 
-        const user = await UserModel.findOne({username:userName});
+        const user = await UserModel.findOne({email:email});
 
         if(user) {
             // user already exist
@@ -35,7 +41,10 @@ app.post("/api/v1/signup", async (req:any, res:any) => {
         console.log("creating new user")
         const hashedPassword = await bcrypt.hash(password, 10);
         await UserModel.create({
-            username:userName,
+            firstName:firstName,
+            lastName:lastName,
+            email:email,
+            phoneNumber:phoneNumber,
             password:hashedPassword
 
         })
@@ -54,12 +63,12 @@ app.post("/api/v1/signup", async (req:any, res:any) => {
 
 app.post("/api/v1/signin", async(req:any, res:any) => {
 
-    const userName = req.body.userName;
+    const email = req.body.email;
     const password = req.body.password;
     try {
 
        const existingUser = await UserModel.findOne({
-        username:userName,
+        username:email,
        })
 
        //console.log("existing user ", existingUser);
@@ -125,12 +134,12 @@ app.post("/api/v1/content", userMiddleware, async(req, res) => {
 
 // @ts-ignore
 app.get("/api/v1/content", userMiddleware, async (req, res) => {
-    const userId = (req as any).userId;
+    const email = (req as any).userId;
 
     try {
         const content = await ContentModel.find({
-            userId:userId,
-        }).populate("userId", "username")
+            email:email,
+        }).populate("emailId", "firstName", "lastName")
     
         return res.status(200).json({
             content,
@@ -229,7 +238,7 @@ app.get("/api/v1/brain/:sharelink", async(req, res)=> {
 
 
         res.status(200).json({
-            username:user?.username,
+            username:user?.firstName,
             content:content
         })
     } catch(error) {
