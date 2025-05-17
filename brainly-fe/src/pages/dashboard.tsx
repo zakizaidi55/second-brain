@@ -1,23 +1,16 @@
-import {  useState } from 'react'
+import {   useState } from 'react'
 import { Button } from '../components/Button'
 import { CreateContentModal } from '../components/CreateContentModal'
 import { PlusIcon } from '../Icons/PlusIcon'
 import { useContent } from '../hooks/useContent'
 import { Card } from '../components/Card'
-import { useNavigate } from 'react-router-dom'
-import { Navbar } from '../components/Navbar'
 
 
 export function Dashboard() {
   const [modalOpen, setModalOpen] = useState(false);
   const contents = useContent();
-  const navigate = useNavigate();
+  console.log('localStorage.getItem("token")',localStorage.getItem("token"));
 
-
-  function logout() {
-    localStorage.removeItem("token");
-    navigate("/");
-  }
   
   return (
     <div>
@@ -33,9 +26,7 @@ export function Dashboard() {
         </div>
 
         <div className="flex justify-end gap-4">
-          <Button onClick={() => {
-            logout()
-          }} variant="secondary" text="Logout"></Button>
+          <Button  variant="secondary" text="Logout"></Button>
         </div>
       </div>
 

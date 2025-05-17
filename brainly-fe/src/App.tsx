@@ -5,9 +5,9 @@ import { Navbar } from "./components/Navbar"
 import { Dashboard } from "./pages/dashboard"
 import { ErrorPage } from "./pages/ErrorPage"
 import  LandingPage  from "./pages/LandingPage"
-import { Signin } from "./pages/Signin"
+import { Signin } from "./pages/Singin"
 import { Signup } from "./pages/Singup"
-import { BrowserRouter, Routes, Route } from "react-router-dom"
+import { Routes, Route } from "react-router-dom"
 import { Sidebar } from "./components/Sidebar"
 
 
@@ -25,7 +25,6 @@ function App() {
   return (  <div>
   <Navbar toggleSidebar={toggleSidebar} />
   <Sidebar isOpen={sidebarOpen} toggle={toggleSidebar} />
-  <BrowserRouter>
     <Routes>
       <Route path="/signup" element={
         <OpenRoute>
@@ -54,7 +53,6 @@ function App() {
       }
       />
     </Routes>
-  </BrowserRouter>
   </div>)
 }
 

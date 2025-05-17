@@ -1,33 +1,31 @@
 import { useRef } from "react";
-import { Button } from "../components/Button";
 import axios from "axios";
 import { Input } from "../components/Input";
 import { BACKEND_URL } from "../config";
 import { useNavigate } from "react-router-dom";
-
+import toast from "react-hot-toast";
 
 export function Signin() {
-    const userNameRef = useRef<HTMLInputElement>(null);
+    const emailRef = useRef<HTMLInputElement>(null);
     const passwordRef = useRef<HTMLInputElement>(null); 
     const navigate = useNavigate();
 
     async function signin() {
-        console.log("button Clicked");
-        const userName = userNameRef?.current?.value;
+        const email = emailRef?.current?.value;
         const password = passwordRef?.current?.value;
-    
-        if (!userName || !password) {
-            alert("Please enter values")
+        
+        if (!email || !password) {
+            toast.error("Enter email Id and password")
             return;
         }
-    
+        
+        const toastId = toast.loading("Loading.....")
         try {
             const res = await axios.post(`${BACKEND_URL}/api/v1/signin`, {
-                userName,
+                email,
                 password,
             });
     
-            console.log("API Response:", res);
             
             // @ts-ignore
             const token = res?.data?.token;
@@ -37,6 +35,7 @@ export function Signin() {
     
             localStorage.setItem("token", token);
             navigate("/dashboard");
+
     
         } catch (error:any) {
             console.error("Axios Error:", error);
@@ -53,19 +52,23 @@ export function Signin() {
                 
             }
         }
+
+        finally {
+            toast.dismiss(toastId);
+        }
     
     }
 
     
     return <div className="h-screen w-screen bg-gray-200 flex justify-center items-center">
         <div className="bg-white rounded-xl border p-12 max-w-[430px]">
-            <Input reference={userNameRef} placeholder="Username" textType={"text"}/>
+            <Input reference={emailRef} placeholder="Email" textType={"email"}/>
             <Input reference={passwordRef} placeholder="Password" textType={"password"} />
             <div className="flex justify-center items-center rounded pt-4"> 
                 {/* <Button onClick={signin} loading={false} variant="primary" text="signup" fullWidth={true}/> */}
-                <div className="flex gap-2">
-                    <button className="rounded-md border p-4 max-w-36" onClick={signin}>Sign in</button>
-                    <button className="rounded-md border p-4 max-w-36" onClick={()=> navigate("/signup")}>Dont have an account</button>
+                <div className="flex gap-2 mx-3">
+                    <button className="rounded-md border p-4 min-w-20 max-w-24" onClick={signin}>Sign in</button>
+                    <button className="rounded-md border p-4 min-w-20 max-w-24 " onClick={()=> navigate("/signup")}>Create</button>
                 </div>
                 
             </div>
