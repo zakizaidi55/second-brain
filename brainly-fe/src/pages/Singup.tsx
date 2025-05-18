@@ -4,7 +4,7 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import toast from "react-hot-toast";
 import { BACKEND_URL } from "../config";
 import axios from "axios";
-import { Navigate, useNavigate } from "react-router-dom";
+import {  useNavigate } from "react-router-dom";
 
 // Define the type for form data
 interface FormData {
@@ -29,10 +29,7 @@ export function Signup() {
     }
     const toastId = toast.loading("Loading.....")
     try {
-        console.log("in try block")
-        const res = await axios.post(`${BACKEND_URL}/api/v1/signup`, data);
-    
-        console.log("API Response:", res);
+      await axios.post(`${BACKEND_URL}/api/v1/signup`, data);
     } catch(error) {
         console.log("Error in singup endpoint");
         console.log(error)

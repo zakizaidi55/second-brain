@@ -1,8 +1,9 @@
 import { useEffect } from "react";
+import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 export function OpenRoute({children} : any) {
-    const token = localStorage.getItem("token");
+    const {token} = useSelector((state:any) => state.auth);
     const navigate = useNavigate();
     
     useEffect(() => {

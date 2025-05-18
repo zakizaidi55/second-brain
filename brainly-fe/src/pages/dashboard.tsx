@@ -9,8 +9,6 @@ import { Card } from '../components/Card'
 export function Dashboard() {
   const [modalOpen, setModalOpen] = useState(false);
   const contents = useContent();
-  console.log('localStorage.getItem("token")',localStorage.getItem("token"));
-
   
   return (
     <div>
