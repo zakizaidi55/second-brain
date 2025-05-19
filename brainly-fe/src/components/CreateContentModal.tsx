@@ -5,6 +5,7 @@ import { Button } from "./Button";
 import { Input } from "./Input";
 import axios from "axios";
 import { BACKEND_URL } from "../config";
+import { useSelector } from "react-redux";
 
 enum ContentType {
     Youtube = "youtube",
@@ -16,6 +17,7 @@ export function CreateContentModal({open, onClose}:any) {
     const titleRef = useRef<HTMLInputElement>(null);
     const linkRef = useRef<HTMLInputElement>(null);
     const [type, setType] = useState(ContentType.Youtube)
+    const {token} = useSelector((state:any) => state.auth)
     
     async function addContent() {
         const title = titleRef?.current?.value;
@@ -32,7 +34,7 @@ export function CreateContentModal({open, onClose}:any) {
             type
         }, {
             headers : {
-                "Authorization" : localStorage.getItem("token")
+                "Authorization" : token,
             } 
         })
 
