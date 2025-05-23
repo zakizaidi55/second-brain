@@ -1,24 +1,15 @@
 
 import { useNavigate } from "react-router-dom";
 import profilePic from "../assets/images/profilePic.png"
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setToken } from "../reducers/slices/AuthSlice";
-interface NavbarProps {
-    toggleSidebar: () => void;
-}
 
 
-export function Navbar({toggleSidebar, authModal, setAuthModal}:any) {
-  // const [token, setToken] = useState(localStorage.getItem("token"));
+export function Navbar({toggleSidebar}:any) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const {token} = useSelector((state:any) => state.auth);
-
-  useEffect(()=>{
-    console.log('token',token);
-
-  },[navigate,token])
 
   useEffect(() => {
     if (!token) {
@@ -31,6 +22,8 @@ export function Navbar({toggleSidebar, authModal, setAuthModal}:any) {
 
   function logout() {
     dispatch(setToken(null));
+    localStorage.removeItem("token");
+    console.log("token after resetting null ", token);
     navigate("/");
   }
     

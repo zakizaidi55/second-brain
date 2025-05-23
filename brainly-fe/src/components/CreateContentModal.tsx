@@ -1,5 +1,5 @@
 
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { CrossIcon } from "../Icons/CrossIcon";
 import { Button } from "./Button";
 import { Input } from "./Input";
@@ -13,7 +13,6 @@ enum ContentType {
 }
 
 export function CreateContentModal({open, onClose}:any) {
-
     const titleRef = useRef<HTMLInputElement>(null);
     const linkRef = useRef<HTMLInputElement>(null);
     const [type, setType] = useState(ContentType.Youtube)

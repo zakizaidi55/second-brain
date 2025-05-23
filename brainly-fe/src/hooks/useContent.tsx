@@ -13,9 +13,6 @@ export function useContent() {
                 "Authorization" : token
             }
         })
-        
-        
-        console.log(response);
         // @ts-ignore
         setContents(response?.data?.content);
     }

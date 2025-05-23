@@ -6,10 +6,9 @@ import toast from "react-hot-toast";
 import { useDispatch } from "react-redux";
 import { setToken } from "../reducers/slices/AuthSlice";
 
-export function Signin() {  
-    
+export function Signin() {
     const emailRef = useRef<HTMLInputElement>(null);
-    const passwordRef = useRef<HTMLInputElement>(null); 
+    const passwordRef = useRef<HTMLInputElement>(null);
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
@@ -50,37 +49,41 @@ export function Signin() {
     }
 
     return (
-        <div className="h-screen w-screen bg-gray-100 flex justify-center items-center">
-            <div className="bg-white p-10 rounded-lg shadow-lg w-full max-w-md">
-                <h2 className="text-2xl font-semibold mb-6 text-center">Sign In</h2>
+        <div className="relative h-screen w-screen overflow-hidden bg-[url('/background.jpg')] bg-cover bg-center">
+            {/* Blurred Overlay with reduced blur */}
+            <div className="absolute inset-0 bg-black/30 backdrop-blur-sm z-0" />
 
-                <input
-                    ref={emailRef}
-                    type="email"
-                    placeholder="Email"
-                    className="w-full p-3 mb-4 border rounded"
-                />
+            {/* Foreground Sign-in Form */}
+            <div className="relative z-10 flex justify-center items-center h-full">
+                <div className="bg-white bg-opacity-90 p-10 rounded-xl shadow-2xl w-full max-w-md">
+                    <h2 className="text-3xl font-bold mb-6 text-center text-gray-800">Sign In</h2>
 
-                <input
-                    ref={passwordRef}
-                    type="password"
-                    placeholder="Password"
-                    className="w-full p-3 mb-6 border rounded"
-                />
-
-                <div className="flex justify-between gap-4">
-                    <button
-                        onClick={signin}
-                        className="flex-1 bg-blue-600 text-white p-3 rounded hover:bg-blue-700 transition"
-                    >
-                        Sign In
-                    </button>
-                    <button
-                        onClick={() => navigate("/signup")}
-                        className="flex-1 bg-gray-200 text-gray-800 p-3 rounded hover:bg-gray-300 transition"
-                    >
-                        Create
-                    </button>
+                    <input
+                        ref={emailRef}
+                        type="email"
+                        placeholder="Email"
+                        className="w-full p-3 mb-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 transition"
+                    />
+                    <input
+                        ref={passwordRef}
+                        type="password"
+                        placeholder="Password"
+                        className="w-full p-3 mb-6 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 transition"
+                    />
+                    <div className="flex flex-col justify-between gap-4">
+                        <button
+                            onClick={signin}
+                            className="w-full mt-4 bg-indigo-600 text-white font-bold p-4 rounded-lg hover:bg-indigo-700 shadow-md transition duration-200"
+                        >
+                            Login
+                        </button>
+                        <div className="text-center cursor-pointer" onClick={()=>navigate("/signup")}>
+                            Don't have an account
+                        </div>
+                        <div className="text-center cursor-pointer" onClick={()=>navigate("/signup")}>
+                            Home
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
