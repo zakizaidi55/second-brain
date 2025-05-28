@@ -1,6 +1,5 @@
 import { ReactElement } from "react";
 
-
 type variants = "primary" | "secondary"
 interface ButtonProps {
     variant : variants
@@ -19,7 +18,7 @@ const variantStyles = {
 }
 
 const defaultStyles = "px-4 py-2 rounded-md font-light flex items-center "
- 
+
 const sizeStyles = {
     "sm" : "py-1 px-2" ,
     "md" : "py-2 px-4",

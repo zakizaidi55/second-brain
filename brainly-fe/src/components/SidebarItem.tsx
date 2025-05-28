@@ -8,7 +8,6 @@ export function SidebarItem({text, icon}: {
         <div className="pr-2">
             {icon} 
         </div>
-
         <div>
             {text}
         </div>

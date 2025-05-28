@@ -1,5 +1,3 @@
-import React from 'react'
-
 function AuthModal({authModal}:any) {
   
   return (
