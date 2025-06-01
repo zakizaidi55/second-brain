@@ -24,7 +24,6 @@ export function Navbar({toggleSidebar}:any) {
   function logout() {
     dispatch(setToken(null));
     localStorage.removeItem("token");
-    console.log("token after resetting null ", token);
     navigate("/");
   }
     
@@ -44,8 +43,8 @@ export function Navbar({toggleSidebar}:any) {
         </div> 
       }
       {
-        token && <div className="flex md:visible">
-          <img src={profilePic} alt="profile" className="h-9 w-9 rounded-full"/>
+        token && <div className="flex md:visible gap-2">
+          <img src={profilePic} alt="profile" className="h-10 w-10 rounded-full mt-2"/>
           <button className="text-white text-xl border p-3 rounded-md" onClick={logout}>Logout</button>
         </div>
       } 

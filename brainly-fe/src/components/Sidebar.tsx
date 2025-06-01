@@ -1,10 +1,5 @@
 import { motion } from "framer-motion";
 
-interface SidebarProps {
-  isOpen: boolean;
-  toggle: () => void;
-}
-  
 const sidebarVariants = {
   open: { x: 0 },
   closed: { x: '-100%' },

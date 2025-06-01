@@ -1,8 +1,6 @@
-function AuthModal({authModal}:any) {
-  
+function AuthModal() {
   return (
     <div className='text-black'>
-        
     </div>
   )
 }

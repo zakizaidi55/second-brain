@@ -6,7 +6,6 @@ import { useSelector } from "react-redux";
 export function useContent() {
     const [contents, setContents] = useState([]);
     const {token} = useSelector((state:any) => state.auth)
-
     async function fetchData() {
         const response = await axios.get(`${BACKEND_URL}/api/v1/content`, {
             headers : {
@@ -19,7 +18,7 @@ export function useContent() {
 
     useEffect(() => {
         fetchData();
-    },[])
+    },[token])
 
     return contents;
 }
